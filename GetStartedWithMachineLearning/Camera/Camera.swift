@@ -113,4 +113,61 @@ class Camera: NSObject {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(updateForDeviceOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
+    
+    private func configureCaptureSession(completionHandler: (_ success: Bool) -> Void) {
+        
+        var success = false
+        
+        self.captureSession.beginConfiguration()
+        
+        defer {
+            self.captureSession.commitConfiguration()
+            completionHandler(success)
+        }
+        
+        guard
+            let captureDevice = captureDevice,
+            let deviceInput = try? AVCaptureDeviceInput(device: captureDevice)
+        else {
+            logger.error("Failed to obtain video input.")
+            return
+        }
+        
+        let photoOutput = AVCapturePhotoOutput()
+                        
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "VideoDataOutputQueue"))
+  
+        guard captureSession.canAddInput(deviceInput) else {
+            logger.error("Unable to add device input to capture session.")
+            return
+        }
+        guard captureSession.canAddOutput(photoOutput) else {
+            logger.error("Unable to add photo output to capture session.")
+            return
+        }
+        guard captureSession.canAddOutput(videoOutput) else {
+            logger.error("Unable to add video output to capture session.")
+            return
+        }
+        
+        captureSession.addInput(deviceInput)
+        captureSession.addOutput(photoOutput)
+        captureSession.addOutput(videoOutput)
+        
+        self.deviceInput = deviceInput
+        self.photoOutput = photoOutput
+        self.videoOutput = videoOutput
+        
+        photoOutput.isHighResolutionCaptureEnabled = true
+        photoOutput.maxPhotoQualityPrioritization = .quality
+        
+        updateVideoOutputConnection()
+        
+        isCaptureSessionConfigured = true
+        
+        success = true
+    }
 }
