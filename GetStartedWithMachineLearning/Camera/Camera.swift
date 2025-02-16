@@ -259,4 +259,14 @@ class Camera: NSObject {
             }
         }
     }
+    
+    func stop() {
+        guard isCaptureSessionConfigured else { return }
+        
+        if captureSession.isRunning {
+            sessionQueue.async {
+                self.captureSession.stopRunning()
+            }
+        }
+    }
 }
