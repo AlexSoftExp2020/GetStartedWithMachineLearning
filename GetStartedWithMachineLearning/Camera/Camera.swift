@@ -385,3 +385,5 @@ fileprivate extension UIScreen {
         }
     }
 }
+
+fileprivate let logger = Logger(subsystem: "upd.GetStartedWithMachineLearning", category: "Camera")
