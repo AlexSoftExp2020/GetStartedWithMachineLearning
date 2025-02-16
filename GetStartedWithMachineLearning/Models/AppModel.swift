@@ -98,3 +98,11 @@ final class AppModel: ObservableObject {
         }
     }
 }
+
+extension AppModel: MLDelegate {
+    func updateMLModel(with model: NSObject) {
+        guard let mlModel = model as? HandPoseMLModel else { return }
+        camera.currentMLModel = mlModel
+    }
+}
+
