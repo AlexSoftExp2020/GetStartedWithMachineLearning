@@ -45,4 +45,17 @@ final class AppModel: ObservableObject {
             }
         }
     }
+    
+    private var handposeMLModelURLs: [URL] {
+         let urls = availableHandPoseMLModels.map { $0.url }
+         return urls
+     }
+     
+     init() {
+         camera.mlDelegate = self
+         setDefaultMLModel()
+         Task {
+             await handleCameraPreviews()
+         }
+     }
 }
