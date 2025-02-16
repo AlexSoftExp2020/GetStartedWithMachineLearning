@@ -203,5 +203,24 @@ class Camera: NSObject {
         }
     }
     
-    
+    private func updateSessionForCaptureDevice(_ captureDevice: AVCaptureDevice) {
+        guard isCaptureSessionConfigured else { return }
+        
+        captureSession.beginConfiguration()
+        defer { captureSession.commitConfiguration() }
+
+        for input in captureSession.inputs {
+            if let deviceInput = input as? AVCaptureDeviceInput {
+                captureSession.removeInput(deviceInput)
+            }
+        }
+        
+        if let deviceInput = deviceInputFor(device: captureDevice) {
+            if !captureSession.inputs.contains(deviceInput), captureSession.canAddInput(deviceInput) {
+                captureSession.addInput(deviceInput)
+            }
+        }
+        
+        updateVideoOutputConnection()
+    }
 }
