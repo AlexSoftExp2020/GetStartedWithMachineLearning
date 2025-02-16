@@ -86,4 +86,15 @@ final class AppModel: ObservableObject {
             }
         }
     }
+    
+    private func setDefaultMLModel() {
+        Task {
+            guard let mlModel = await HandPoseMLModel.getDefaultMLModel() else { return }
+            Task { @MainActor in
+                self.defaultMLModel = mlModel
+                self.currentMLModel = mlModel
+                self.availableHandPoseMLModels.insert(mlModel)
+            }
+        }
+    }
 }
