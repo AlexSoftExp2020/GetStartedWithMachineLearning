@@ -77,4 +77,13 @@ final class AppModel: ObservableObject {
             print("Using last trained ML model in your RPS game: \(lastTrained.name)")
         }
     }
+    
+    private func handleCameraPreviews() async {
+        let imageStream = camera.previewStream.map { $0.image }
+        for await image in imageStream {
+            Task { @MainActor in
+                self.viewfinderImage = image
+            }
+        }
+    }
 }
