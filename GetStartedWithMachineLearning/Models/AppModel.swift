@@ -104,5 +104,48 @@ extension AppModel: MLDelegate {
         guard let mlModel = model as? HandPoseMLModel else { return }
         camera.currentMLModel = mlModel
     }
+    
+    func gatherObservations(pixelBuffer: CVImageBuffer) async {
+        guard canPredict else { return }
+        
+        Task { @MainActor in
+            canPredict = false
+        }
+
+        guard let mlModel = camera.currentMLModel else {
+            await resetPrediction()
+            return
+        }
+        
+        Task {
+            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up)
+            do {
+                try imageRequestHandler.perform([camera.handPoseRequest])
+                guard let observation = camera.handPoseRequest.results?.first else {
+                    await resetPrediction()
+                    return
+                }
+
+                Task { @MainActor in
+                    isHandInFrame = true
+                    isGatheringObservations = true
+                }
+
+                let poseMultiArray = try observation.keypointsMultiArray()
+                
+                let input = HandPoseInput(poses: poseMultiArray)
+                guard let output = try mlModel.predict(poses: input) else { return }
+                await updatePredictions(output: output)
+
+                let jointPoints = try gatherHandPosePoints(from: observation)
+                await updateNodes(points: jointPoints)
+            } catch {
+                print("Error performing request: \(error)")
+            }
+        }
+        
+    }
 }
+
+
 
