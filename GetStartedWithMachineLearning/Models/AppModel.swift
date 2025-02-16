@@ -65,4 +65,16 @@ final class AppModel: ObservableObject {
             availableHandPoseMLModels.insert(model)
         }
     }
+    
+    func useLastTrainedModel() async {
+        guard let lastTrained = await HandPoseMLModel.getLastTrainedModel() else {
+            print("Couldn't find any recently trained ML models.")
+            return
+        }
+        
+        Task { @MainActor in
+            self.currentMLModel = lastTrained
+            print("Using last trained ML model in your RPS game: \(lastTrained.name)")
+        }
+    }
 }
