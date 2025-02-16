@@ -170,4 +170,28 @@ class Camera: NSObject {
         
         success = true
     }
+    
+    private func checkAuthorization() async -> Bool {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            logger.debug("Camera access authorized.")
+            return true
+        case .notDetermined:
+            logger.debug("Camera access not determined.")
+            sessionQueue.suspend()
+            let status = await AVCaptureDevice.requestAccess(for: .video)
+            sessionQueue.resume()
+            return status
+        case .denied:
+            logger.debug("Camera access denied.")
+            return false
+        case .restricted:
+            logger.debug("Camera library access restricted.")
+            return false
+        @unknown default:
+            return false
+        }
+    }
+    
+    
 }
