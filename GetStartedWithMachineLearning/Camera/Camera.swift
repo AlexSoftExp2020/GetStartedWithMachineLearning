@@ -294,4 +294,14 @@ class Camera: NSObject {
     func updateForDeviceOrientation() {
         //TODO: Figure out if we need this for anything.
     }
+    
+    private func videoOrientationFor(_ deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation? {
+        switch deviceOrientation {
+        case .portrait: return AVCaptureVideoOrientation.portrait
+        case .portraitUpsideDown: return AVCaptureVideoOrientation.portraitUpsideDown
+        case .landscapeLeft: return AVCaptureVideoOrientation.landscapeRight
+        case .landscapeRight: return AVCaptureVideoOrientation.landscapeLeft
+        default: return nil
+        }
+    }
 }
