@@ -387,3 +387,8 @@ fileprivate extension UIScreen {
 }
 
 fileprivate let logger = Logger(subsystem: "upd.GetStartedWithMachineLearning", category: "Camera")
+
+protocol MLDelegate: AnyObject {
+    func updateMLModel(with model: NSObject)
+    func gatherObservations(pixelBuffer: CVImageBuffer) async
+}
