@@ -223,4 +223,12 @@ class Camera: NSObject {
         
         updateVideoOutputConnection()
     }
+    
+    private func updateVideoOutputConnection() {
+        if let videoOutput = videoOutput, let videoOutputConnection = videoOutput.connection(with: .video) {
+            if videoOutputConnection.isVideoMirroringSupported {
+                videoOutputConnection.isVideoMirrored = isUsingFrontCaptureDevice
+            }
+        }
+    }
 }
