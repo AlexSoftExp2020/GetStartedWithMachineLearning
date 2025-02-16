@@ -281,4 +281,14 @@ class Camera: NSObject {
             }
         }
     }
+    
+    private var deviceOrientation: UIDeviceOrientation {
+        var orientation = UIDevice.current.orientation
+        if orientation == UIDeviceOrientation.unknown {
+            orientation = UIScreen.main.orientation
+        }
+        return orientation
+    }
+    
+    
 }
