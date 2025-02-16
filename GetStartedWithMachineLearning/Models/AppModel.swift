@@ -58,4 +58,11 @@ final class AppModel: ObservableObject {
              await handleCameraPreviews()
          }
      }
+    
+    func findExistingModels() async {
+        let models = await HandPoseMLModel.findExistingModels(exclude: handposeMLModelURLs)
+        for model in models {
+            availableHandPoseMLModels.insert(model)
+        }
+    }
 }
