@@ -101,4 +101,16 @@ class Camera: NSObject {
     
     var mlDelegate: MLDelegate?
     var previewImageSize: CGSize = .zero
+    
+    override init() {
+        super.init()
+        initialize()
+    }
+    
+    private func initialize() {
+        sessionQueue = DispatchQueue(label: "session queue")
+                
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateForDeviceOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
 }
