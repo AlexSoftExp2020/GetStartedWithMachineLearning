@@ -145,6 +145,14 @@ extension AppModel: MLDelegate {
         }
         
     }
+    
+    private func gatherHandPosePoints(from observation: VNHumanHandPoseObservation) throws -> [CGPoint] {
+        let allPointsDict = try observation.recognizedPoints(.all)
+        var allPoints: [VNRecognizedPoint] = Array(allPointsDict.values)
+        allPoints = allPoints.filter { $0.confidence > 0.5 }
+        let points: [CGPoint] = allPoints.map { $0.location }
+        return points
+    }
 }
 
 
