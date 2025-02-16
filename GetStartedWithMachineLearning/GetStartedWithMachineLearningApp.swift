@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct GetStartedWithMachineLearningApp: App {
+    @StateObject var appModel = AppModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GameView()
+                .environmentObject(appModel)
+            //#-learning-code-snippet(mlgameview.replace)
+            .task {
+                await appModel.useLastTrainedModel()
+            }
         }
     }
 }
