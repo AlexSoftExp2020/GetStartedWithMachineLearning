@@ -153,6 +153,11 @@ extension AppModel: MLDelegate {
         let points: [CGPoint] = allPoints.map { $0.location }
         return points
     }
+    
+    @MainActor
+    private func updateNodes(points: [CGPoint]) {
+        self.nodePoints = points
+    }
 }
 
 
