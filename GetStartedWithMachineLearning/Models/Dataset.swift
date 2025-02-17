@@ -112,4 +112,17 @@ final class Dataset: ObservableObject, Identifiable {
             }
         }
     }
+    
+    func moveDirectoryTo(_ newName: String) {
+        guard let originalDirectory = directory else { return }
+        guard let newDirectory = baseDirectory?.appendingPathComponent(newName, isDirectory: true) else { return }
+        do {
+            try FileManager.default.moveItem(at: originalDirectory, to: newDirectory)
+            name = newName
+        } catch {
+            print("Could not move directory: \(error.localizedDescription)")
+        }
+    }
+    
+    
 }
