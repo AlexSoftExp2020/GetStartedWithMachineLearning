@@ -86,4 +86,30 @@ final class Dataset: ObservableObject, Identifiable {
             print("Error creating directories: \(error.localizedDescription)")
         }
     }
+    
+    private func copyToDocumentDirectory(_ resourcesFolder: URL) {
+        let subDirectories = resourcesFolder.subDirectories
+        for subDirectory in subDirectories {
+            let subDir = subDirectory.lastPathComponent.capitalized
+            let contents = subDirectory.directoryContents
+            for content in contents {
+                let fileName = content.lastPathComponent
+                guard let newSubDirectory = directory?.appending(path: subDir, directoryHint: .isDirectory) else { return }
+                do {
+                    try FileManager.default.createDirectory(at: newSubDirectory)
+                    let url = newSubDirectory.appending(path: fileName)
+                    guard !url.fileExists else { continue }
+                    Task {
+                        do {
+                            try FileManager.default.copyItem(at: content, to: url)
+                        } catch {
+                            print("Error copying url \(error)")
+                        }
+                    }
+                } catch {
+                    print("Error creating directory \(error)")
+                }
+            }
+        }
+    }
 }
