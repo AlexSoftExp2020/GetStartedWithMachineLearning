@@ -124,5 +124,13 @@ final class Dataset: ObservableObject, Identifiable {
         }
     }
     
+    func delete() {
+        guard let directory = directory else { return }
+        do {
+            try FileManager.default.deleteDirectory(directory)
+        } catch {
+            print("Could not delete \(name)'s directory: \(error.localizedDescription)")
+        }
+    }
     
 }
