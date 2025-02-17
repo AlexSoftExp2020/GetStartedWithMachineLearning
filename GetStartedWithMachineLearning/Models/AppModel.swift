@@ -164,6 +164,14 @@ extension AppModel: MLDelegate {
         predictionLabel = output.label.capitalized
         predictionProbability.getNewPredictions(from: output.labelProbabilities)
     }
+    
+    @MainActor
+    private func resetPrediction() {
+        nodePoints = []
+        predictionLabel = ""
+        predictionProbability = PredictionMetrics()
+        isHandInFrame = false
+    }
 }
 
 
