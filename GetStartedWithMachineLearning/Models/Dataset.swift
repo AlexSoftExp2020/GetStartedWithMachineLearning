@@ -55,4 +55,8 @@ final class Dataset: ObservableObject, Identifiable {
             createDirectories()
         }
     }
+    
+    func getTotalImageCount() -> Int {
+        return directory?.getTotalFilesInDataset() ?? 0
+    }
 }
