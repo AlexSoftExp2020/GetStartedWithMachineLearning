@@ -73,4 +73,17 @@ final class Dataset: ObservableObject, Identifiable {
         let directory = subDirectories.first(where: { $0.lastPathComponent == subDirectoryName })
         return directory?.directoryContents ?? []
     }
+    
+    private func createDirectories() {
+        guard let baseDirectory = baseDirectory, let directory = directory else { return }
+        do {
+            try FileManager.default.createDirectory(at: baseDirectory)
+            try FileManager.default.createDirectory(at: directory)
+            for subDirectory in subDirectories {
+                try FileManager.default.createDirectory(at: subDirectory)
+            }
+        } catch {
+            print("Error creating directories: \(error.localizedDescription)")
+        }
+    }
 }
