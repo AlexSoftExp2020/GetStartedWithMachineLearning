@@ -158,6 +158,12 @@ extension AppModel: MLDelegate {
     private func updateNodes(points: [CGPoint]) {
         self.nodePoints = points
     }
+    
+    @MainActor
+    private func updatePredictions(output: HandPoseOutput) {
+        predictionLabel = output.label.capitalized
+        predictionProbability.getNewPredictions(from: output.labelProbabilities)
+    }
 }
 
 
