@@ -63,4 +63,9 @@ final class Dataset: ObservableObject, Identifiable {
     func getImageCount(for subDirectory: URL) -> Int {
         return subDirectory.directoryContents.count
     }
+    
+    func getImages(from subDirectory: URL) -> [URL] {
+        let directory = subDirectories.first(where: { $0.lastPathComponent == subDirectory.lastPathComponent })
+        return directory?.directoryContents ?? []
+    }
 }
