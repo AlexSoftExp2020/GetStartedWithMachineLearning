@@ -42,4 +42,17 @@ final class Dataset: ObservableObject, Identifiable {
         }
         return subDirs
     }
+    
+    init(name: String? = nil, type: DatasetType, moves: [String], resourceDirectory: URL? = nil, isNew: Bool = false) {
+        self.name = name ?? "New Dataset"
+        self.type = type
+        self.moves = moves
+        self.isNew = isNew
+
+        if let dir = resourceDirectory {
+            copyToDocumentDirectory(dir)
+        } else {
+            createDirectories()
+        }
+    }
 }
