@@ -68,4 +68,9 @@ final class Dataset: ObservableObject, Identifiable {
         let directory = subDirectories.first(where: { $0.lastPathComponent == subDirectory.lastPathComponent })
         return directory?.directoryContents ?? []
     }
+    
+    func getImages(from subDirectoryName: String) -> [URL] {
+        let directory = subDirectories.first(where: { $0.lastPathComponent == subDirectoryName })
+        return directory?.directoryContents ?? []
+    }
 }
