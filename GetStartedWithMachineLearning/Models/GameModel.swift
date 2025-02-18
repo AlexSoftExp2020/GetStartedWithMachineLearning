@@ -30,4 +30,18 @@ final class GameModel: ObservableObject {
     private var computersMove: GameMove {
         validMoves[computersMoveName] ?? GameMove.unknown
     }
+    
+    init() {
+        let rock = GameMove(name: "rock", icon: "✊")
+        let paper = GameMove(name: "paper", icon: "✋")
+        let scissors = GameMove(name: "scissors", icon: "✌️")
+
+        rock.beats([scissors])
+        paper.beats([rock])
+        scissors.beats([paper])
+
+        validMoves[rock.name] = rock
+        validMoves[paper.name] = paper
+        validMoves[scissors.name] = scissors
+    }
 }
