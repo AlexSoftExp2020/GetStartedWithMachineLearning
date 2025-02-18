@@ -44,4 +44,15 @@ final class GameModel: ObservableObject {
         validMoves[paper.name] = paper
         validMoves[scissors.name] = scissors
     }
+    
+    func updateGameState() {
+        switch currentState {
+        case .notPlaying:
+            currentState = .playing
+        case .playing:
+            currentState = .notPlaying
+        case .finished:
+            currentState = .playing
+        }
+    }
 }
