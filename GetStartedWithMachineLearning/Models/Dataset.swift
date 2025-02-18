@@ -132,5 +132,9 @@ final class Dataset: ObservableObject, Identifiable {
             print("Could not delete \(name)'s directory: \(error.localizedDescription)")
         }
     }
-    
+}
+
+enum DatasetType: String {
+    case training
+    case validation
 }
