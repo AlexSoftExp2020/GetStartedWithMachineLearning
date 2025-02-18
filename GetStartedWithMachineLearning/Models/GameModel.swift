@@ -96,4 +96,31 @@ final class GameModel: ObservableObject {
             return ""
         }
     }
+    
+    func rotateThroughValidMoves(_ currentMove: String, direction: RotationDirection = .forward) -> GameMove {
+        guard let firstMoveName = validMoveNames.first,
+              let firstMove = validMoves[firstMoveName],
+              let lastMoveName = validMoveNames.last,
+              let lastMove = validMoves[lastMoveName] else {
+            return GameMove.unknown
+        }
+        
+        guard let index = validMoveNames.firstIndex(of: currentMove) else { return firstMove }
+        switch direction {
+        case .forward:
+            if index + 1 < validMoveNames.count {
+                let moveName = validMoveNames[index + 1]
+                return validMoves[moveName] ?? firstMove
+            } else {
+                return firstMove
+            }
+        case .backward:
+            if index - 1 >= 0 {
+                let moveName = validMoveNames[index - 1]
+                return validMoves[moveName] ?? lastMove
+            } else {
+                return lastMove
+            }
+        }
+    }
 }
