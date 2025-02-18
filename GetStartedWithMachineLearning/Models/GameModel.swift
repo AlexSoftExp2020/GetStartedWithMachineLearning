@@ -146,3 +146,8 @@ enum GameResult {
     case lose
     case inconclusive
 }
+
+enum RotationDirection {
+    case forward
+    case backward
+}
