@@ -35,3 +35,11 @@ final class GameMove {
         return .tie
     }
 }
+
+extension GameMove: Equatable {
+    static func == (lhs: GameMove, rhs: GameMove) -> Bool {
+        return lhs.name == rhs.name &&
+               lhs.icon == rhs.icon &&
+               lhs.beatsMoves == rhs.beatsMoves
+    }
+}
