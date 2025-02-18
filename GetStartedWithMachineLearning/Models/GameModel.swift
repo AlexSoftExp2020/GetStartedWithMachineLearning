@@ -139,3 +139,10 @@ enum GameState: String {
     case playing
     case finished
 }
+
+enum GameResult {
+    case tie
+    case win
+    case lose
+    case inconclusive
+}
