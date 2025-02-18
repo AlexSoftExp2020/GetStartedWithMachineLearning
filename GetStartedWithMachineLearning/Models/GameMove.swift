@@ -43,3 +43,8 @@ extension GameMove: Equatable {
                lhs.beatsMoves == rhs.beatsMoves
     }
 }
+
+enum Player {
+    case you
+    case computer
+}
