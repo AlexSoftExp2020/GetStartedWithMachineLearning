@@ -133,3 +133,9 @@ final class GameModel: ObservableObject {
         return yourMove.compare(to: computersMove)
     }
 }
+
+enum GameState: String {
+    case notPlaying
+    case playing
+    case finished
+}
