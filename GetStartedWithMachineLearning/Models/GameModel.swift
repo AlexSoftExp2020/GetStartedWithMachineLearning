@@ -123,4 +123,13 @@ final class GameModel: ObservableObject {
             }
         }
     }
+    
+    private func getGameResult() -> GameResult {
+        guard yourMove != GameMove.unknown,
+              computersMove != GameMove.unknown else {
+            return .inconclusive
+        }
+
+        return yourMove.compare(to: computersMove)
+    }
 }
