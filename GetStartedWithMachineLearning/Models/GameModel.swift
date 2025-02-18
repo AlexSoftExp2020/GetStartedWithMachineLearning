@@ -78,4 +78,22 @@ final class GameModel: ObservableObject {
 
         return text
     }
+    
+    func updateGameTimer() -> String {
+        switch currentState {
+        case .playing:
+            if countDown > 0 {
+               countDown -= 1
+
+            }
+            if countDown == 0 {
+                currentState = .finished
+                countDown = GameModel.countDown
+                playButtonText = "Play Again"
+            }
+            return updateGameResultText()
+        case .finished, .notPlaying:
+            return ""
+        }
+    }
 }
