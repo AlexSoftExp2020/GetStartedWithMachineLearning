@@ -37,3 +37,19 @@ class HandPoseInput {
         self.poses = poses
     }
 }
+
+class HandPoseOutput {
+    let provider : MLFeatureProvider
+
+    lazy var labelProbabilities: [String : Double] = { [unowned self] in
+        self.getOutputProbabilities()
+    }()
+
+    lazy var label: String = { [unowned self] in
+        self.getOutputLabel()
+    }()
+
+    init(features: MLFeatureProvider) {
+        self.provider = features
+    }
+}
