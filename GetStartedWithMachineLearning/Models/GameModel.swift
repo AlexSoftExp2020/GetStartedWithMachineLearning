@@ -55,4 +55,10 @@ final class GameModel: ObservableObject {
             currentState = .playing
         }
     }
+    
+    func updateComputersMove() {
+        guard currentState == .playing else { return }
+        let nextMove = rotateThroughValidMoves(computersMoveName)
+        computersMoveName = nextMove.name
+    }
 }
