@@ -61,4 +61,21 @@ final class GameModel: ObservableObject {
         let nextMove = rotateThroughValidMoves(computersMoveName)
         computersMoveName = nextMove.name
     }
+    
+    func updateGameResultText() -> String {
+        var text = ""
+        
+        guard currentState == .finished else { return text }
+
+        let result = getGameResult()
+        
+        switch result {
+        case .win: text = "YOU WIN"
+        case .lose: text = "YOU LOSE"
+        case .tie: text = "TIE"
+        case .inconclusive: text = "INCONCLUSIVE"
+        }
+
+        return text
+    }
 }
