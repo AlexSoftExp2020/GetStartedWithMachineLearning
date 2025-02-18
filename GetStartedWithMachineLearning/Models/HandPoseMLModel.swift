@@ -29,3 +29,11 @@ final class HandPoseMLModel: NSObject, Identifiable {
         return output
     }
 }
+
+class HandPoseInput {
+    var poses: MLMultiArray
+    
+    init(poses: MLMultiArray) {
+        self.poses = poses
+    }
+}
