@@ -144,5 +144,14 @@ extension HandPoseInput: MLFeatureProvider {
         }
         return nil
     }
+}
+
+extension HandPoseOutput: MLFeatureProvider {
+    var featureNames: Set<String> {
+        return self.provider.featureNames
+    }
     
+    func featureValue(for featureName: String) -> MLFeatureValue? {
+        return self.provider.featureValue(for: featureName)
+    }
 }
