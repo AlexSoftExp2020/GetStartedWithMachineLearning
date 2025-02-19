@@ -21,3 +21,20 @@ class PhotoPickerDataModel: ObservableObject {
         }
     }
 }
+
+struct PhotoFile: Transferable {
+    let name: String
+    let url: URL
+    
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(contentType: .image, shouldAttemptToOpenInPlace: false) { data in
+            SentTransferredFile(data.url, allowAccessingOriginalFile: true)
+        } importing: { received in
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let fileName = received.file.lastPathComponent
+            let destinationURL = tempDirectory.appendingPathComponent(fileName)
+            try FileManager.default.copyItem(at: received.file, to: destinationURL)
+            return Self.init(name: fileName, url: destinationURL)
+        }
+    }
+}
