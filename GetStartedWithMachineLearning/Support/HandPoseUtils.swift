@@ -155,3 +155,13 @@ extension HandPoseOutput: MLFeatureProvider {
         return self.provider.featureValue(for: featureName)
     }
 }
+
+extension HandPoseOutput {
+    func getOutputProbabilities() -> [String : Double] {
+        return self.provider.featureValue(for: "labelProbabilities")?.dictionaryValue as? [String : Double] ?? [:]
+    }
+    
+    func getOutputLabel() -> String {
+        return self.provider.featureValue(for: "label")?.stringValue ?? ""
+    }
+}
