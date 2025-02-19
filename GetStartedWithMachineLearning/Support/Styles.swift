@@ -23,3 +23,13 @@ struct CellStyle: ViewModifier {
             }
     }
 }
+
+struct ChartViewStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width: 250, height: 250)
+            .padding()
+            .cornerRadius(10)
+            .padding()
+    }
+}
