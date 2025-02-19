@@ -130,3 +130,19 @@ extension HandPoseMLModel {
         return handposeMLModel
     }
 }
+
+extension HandPoseInput: MLFeatureProvider {
+    var featureNames: Set<String> {
+        get {
+            return ["poses"]
+        }
+    }
+    
+    func featureValue(for featureName: String) -> MLFeatureValue? {
+        if featureName == "poses" {
+            return MLFeatureValue(multiArray: poses)
+        }
+        return nil
+    }
+    
+}
