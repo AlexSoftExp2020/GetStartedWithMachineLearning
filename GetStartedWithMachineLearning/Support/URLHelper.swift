@@ -106,3 +106,24 @@ extension URL {
         return count
     }
 }
+
+extension FileManager {
+    func createDirectory(at url: URL) throws {
+        guard !url.directoryExists else {
+            return
+        }
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+    }
+    
+    func delete(_ url: URL) throws {
+        if url.fileExists {
+            try FileManager.default.removeItem(at: url)
+        }
+    }
+
+    func deleteDirectory(_ url: URL) throws {
+        if url.directoryExists {
+            try FileManager.default.removeItem(at: url)
+        }
+    }
+}
