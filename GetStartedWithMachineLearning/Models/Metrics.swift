@@ -37,3 +37,11 @@ struct PredictionMetric: Identifiable {
     let category: String
     let value: Double
 }
+
+extension PredictionMetric: Equatable {
+    static func == (lhs: PredictionMetric, rhs: PredictionMetric) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.category == rhs.category &&
+               lhs.value == rhs.value
+    }
+}
