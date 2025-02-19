@@ -13,3 +13,21 @@ struct TrainingMetric: Identifiable {
     let x: Double
     let y: Double
 }
+
+class TrainingMetrics: ObservableObject {
+    var allMetricTypes = [String]()
+    var data: [String: [TrainingMetric]] = [:]
+    
+    init() {}
+    
+    func addDatapointForType(type: String, x: Double, y: Double) {
+        let metric = TrainingMetric(x: x, y: y)
+        if var currentMetricArray = data[type] {
+            currentMetricArray.append(metric)
+            data[type] = currentMetricArray
+        } else {
+            allMetricTypes.append(type)
+            data[type] = [metric]
+        }
+    }
+}
