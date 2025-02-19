@@ -33,3 +33,13 @@ struct ChartViewStyle: ViewModifier {
             .padding()
     }
 }
+
+struct GameLabelBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .background(.thinMaterial)
+            .environment(\.colorScheme, .light)
+    }
+}
