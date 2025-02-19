@@ -31,3 +31,9 @@ class TrainingMetrics: ObservableObject {
         }
     }
 }
+
+struct PredictionMetric: Identifiable {
+    var id: String { category }
+    let category: String
+    let value: Double
+}
