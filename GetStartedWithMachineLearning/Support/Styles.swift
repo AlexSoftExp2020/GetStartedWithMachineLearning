@@ -58,3 +58,9 @@ struct CapsuleButton: ButtonStyle {
             .clipShape(Capsule())
     }
 }
+
+struct Constants {
+    static let photoSpacing = 12.0
+    static let photoCornerRadius = 10.0
+    static let photoSize = CGSize(width: 104, height: 104)
+}
