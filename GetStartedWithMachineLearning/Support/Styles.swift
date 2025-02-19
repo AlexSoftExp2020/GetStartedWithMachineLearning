@@ -43,3 +43,18 @@ struct GameLabelBackground: ViewModifier {
             .environment(\.colorScheme, .light)
     }
 }
+
+struct CapsuleButton: ButtonStyle {
+    var backgroundColor: Color = .white
+    var foregroundColor: Color = .accentColor
+    var disabled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
+            .foregroundColor(foregroundColor.opacity(disabled ? 0.7 : 1.0))
+            .background(backgroundColor.opacity(disabled ? 0.5 : 1.0))
+            .clipShape(Capsule())
+    }
+}
