@@ -15,7 +15,24 @@ struct MLModelListView: View {
         Array(appModel.availableHandPoseMLModels)
     }
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 20) {
+            ForEach(mlModels) { mlModel in
+                Button {
+                    selection = mlModel
+                    appModel.currentMLModel = mlModel
+                } label: {
+                    mlModelView(mlModel, isSelected: selection == mlModel)
+                }
+                .buttonStyle(.plain)
+            }
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Available ML Models")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            selection = appModel.currentMLModel
+        }
     }
 }
 
