@@ -22,6 +22,22 @@ struct PredictionLabelOverlay: View {
     var showIcon: Bool = true
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if label.isEmpty {
+            EmptyView()
+        } else {
+            RoundedRectangle(cornerRadius: 10.0, style: .continuous)
+                .fill(Color.translucentBlack)
+                .frame(width: size, height: size)
+                .padding()
+                .overlay {
+                    VStack {
+                        if showIcon {
+                            iconView()
+                        }
+                        Text(label)
+                    }
+                    .foregroundColor(.white)
+                }
+        }
     }
 }
