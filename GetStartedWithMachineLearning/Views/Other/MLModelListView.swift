@@ -34,6 +34,23 @@ struct MLModelListView: View {
             selection = appModel.currentMLModel
         }
     }
+    
+    private func mlModelView(_ model: HandPoseMLModel, isSelected: Bool) -> some View {
+        HStack {
+            Image(systemName: isSelected ? "circle.fill" : "circle")
+                .padding(.trailing)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(model.name)
+                    .fontWeight(.bold)
+                if model == appModel.defaultMLModel {
+                    Text("Default ML model built into the app")
+                        .font(.caption2)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .modifier(CellStyle(cornerRadius: 10))
+        }
+    }
 }
 
 #Preview {
