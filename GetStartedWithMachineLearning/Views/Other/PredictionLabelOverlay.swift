@@ -40,4 +40,14 @@ struct PredictionLabelOverlay: View {
                 }
         }
     }
+    
+    private func iconView() -> some View {
+        Group {
+            if icon == GameMove.unknown.icon {
+                Image(systemName: icon)
+            } else {
+                Text(icon)
+            }
+        }
+    }
 }
