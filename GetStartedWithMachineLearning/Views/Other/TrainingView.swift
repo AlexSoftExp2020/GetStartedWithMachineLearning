@@ -18,11 +18,41 @@ struct TrainingView: View {
     @Binding var newDatasets: [Dataset]
     @FocusState private var focusField: Bool
     
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    private var trainingDataset: Dataset? {
+        trainerDataModel.currentTrainingDataset
     }
-}
 
-#Preview {
-    TrainingView()
+    private var validationDataset: Dataset? {
+        trainerDataModel.currentValidationDataset
+    }
+
+    private var completed: Int {
+        Int(trainerDataModel.completed)
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 25) {
+            if trainerDataModel.currentState == .active {
+                trainingSessionInfo()
+            } else {
+                modelNameTextField()
+                datasets()
+            }
+        }
+        .padding(.horizontal)
+        .toolbar {
+            cancelButton()
+            trainButton()
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle(trainingDataset?.name ?? "")
+        .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: trainerDataModel.currentState) { _ in
+            switch trainerDataModel.currentState {
+            case .finished, .error:
+                closeView()
+            default: break
+            }
+        }
+    }
 }
