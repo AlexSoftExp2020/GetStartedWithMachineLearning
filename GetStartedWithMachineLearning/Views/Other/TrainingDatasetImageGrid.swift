@@ -31,7 +31,32 @@ struct TrainingDatasetImageGrid: View {
     var label: String
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack {
+                LazyVGrid(columns: columns, spacing: Constants.photoSpacing) {
+                    PhotosPicker(selection: $photoPickerDataModel.selection,
+                                 matching: .images,
+                                 photoLibrary: .shared()) {
+                        addPhotoButton()
+                    }
+                    .disabled(isInEditMode)
+                    .onChange(of: photoPickerDataModel.selection) { _ in
+                        addNewPhotos()
+                    }
+                    ForEach(images, id: \.self) { url in
+                        image(url)
+                    }
+                }
+                Spacer()
+            }
+        }
+        .navigationTitle(label)
+        .toolbar {
+            editModeButton()
+        }
+        .onAppear {
+            updateImages()
+        }
     }
 }
 
