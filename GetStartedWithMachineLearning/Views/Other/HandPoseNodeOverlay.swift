@@ -18,6 +18,27 @@ struct HandPoseNodeOverlay: View {
     }
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geo in
+            if points.isEmpty {
+                EmptyView()
+            } else {
+                VStack {
+                    Path {
+                        path in
+                        path.move(to: points[0])
+                        for point in points {
+                            let updatedPoint = updatePoint(point, viewSize: geo.size)
+                            path.addEllipse(in: CGRect(x: updatedPoint.x - radius,
+                                                       y: updatedPoint.y - radius,
+                                                       width: radius * 2,
+                                                       height: radius * 2))
+                        }
+                    }
+                    .foregroundColor(.accent)
+                    .clipped()
+                }
+                .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
+            }
+        }
     }
 }
